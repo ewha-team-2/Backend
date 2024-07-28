@@ -1,5 +1,6 @@
 const axios = require('axios');
-const { User } = require('../models/index.js');
+const db = require('../models/index.js');
+const { User } = db;
 const { generateToken } = require('../auth.js');
 require('dotenv').config();
 

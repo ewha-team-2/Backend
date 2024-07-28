@@ -14,29 +14,20 @@ const sequelize = new Sequelize(database, username, password, {
 });
 
 const User = require('./user')(sequelize, DataTypes);
-const Location = require('./location')(sequelize, DataTypes);
-const Event = require('./event')(sequelize, DataTypes);
+const Plan = require('./plan')(sequelize, DataTypes);
 const Review = require('./review')(sequelize, DataTypes);
-const Budget = require('./budget')(sequelize, DataTypes);
 
-User.hasMany(Review, { foreignKey: 'user_id' });
-Review.belongsTo(User, { foreignKey: 'user_id' });
-Location.hasMany(Review, { foreignKey: 'location_id' });
-Review.belongsTo(Location, { foreignKey: 'location_id' });
-User.hasMany(Budget, { foreignKey: 'user_id' });
-Budget.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(Event, { foreignKey: 'user_id' });
-Event.belongsTo(User, { foreignKey: 'user_id' });
-Location.hasMany(Event, { foreignKey: 'location_id' });
-Event.belongsTo(Location, { foreignKey: 'location_id' });
+const db = {};
 
-sequelize.sync();
+db.sequelize = sequelize;
+db.User = User;
+db.Plan = Plan;
+db.Review = Review;
 
-module.exports = {
-  sequelize,
-  User,
-  Location,
-  Event,
-  Review,
-  Budget
-};
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+module.exports = db;

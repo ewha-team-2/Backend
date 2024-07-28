@@ -2,13 +2,13 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Review extends Model {
+  class Plan extends Model {
     static associate(models) {
-      Review.belongsTo(models.User, { foreignKey: 'user_id', targetKey: 'id' });
+      Plan.belongsTo(models.User, { foreignKey: 'user_id', targetKey: 'id' });
     }
   }
 
-  Review.init({
+  Plan.init({
     id: {
       allowNull: false,
       primaryKey: true,
@@ -23,12 +23,28 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
-    rating: {
-      type: DataTypes.INTEGER,
+    title: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    comment: {
+    description: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    budget: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
+    start_time: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    end_time: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
     created_at: {
@@ -43,10 +59,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'Review',
-    tableName: 'Reviews',
+    modelName: 'Plan',
+    tableName: 'Plans',
     timestamps: false,
   });
 
-  return Review;
+  return Plan;
 };
