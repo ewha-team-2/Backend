@@ -7,12 +7,7 @@ dotenv.config();
 
 const authRoutes = require('./routes/authRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
-/*
-const locationRoutes = require('./routes/locationRoutes');
-const eventRoutes = require('./routes/eventRoutes');
-const calendarRoutes = require('./routes/calendarRoutes');
-const budgetRoutes = require('./routes/budgetRoutes');
-*/
+const travelRoutes = require('./routes/travelRoutes');
 
 const app = express();
 
@@ -21,12 +16,9 @@ app.use(cookieParser());
 
 app.use('/auth', authRoutes);
 app.use('/reviews/', authenticateToken, reviewRoutes);
-/*
-app.use('/locations', locationRoutes);
-app.use('/events', eventRoutes);
-app.use('/calendar', calendarRoutes);
-app.use('/budgets', budgetRoutes);
-*/
+app.use('/travels', authenticateToken, travelRoutes);
+app.use('/plans', authenticateToken, budgetRoutes);
+
 app.get('/', (req, res) => {
   res.send('Hello')
 })
