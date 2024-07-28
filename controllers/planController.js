@@ -1,4 +1,8 @@
-const { Plan, Travel } = require('../models');
+//const { Plan, Travel } = require('../models');
+
+const db = require('../models/index.js');
+const { Plan, Travel } = db;
+
 
 exports.createPlan = async (req, res) => {
   const { id: travelId } = req.params;
