@@ -1,5 +1,17 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+require('dotenv').config();
+
+const env = process.env.NODE_ENV || 'development';
+const config = require('../config/config.js')[env];
+
+const {
+  username, password, database, host, dialect,
+} = config;
+const sequelize = new Sequelize(database, username, password, {
+  host,
+  dialect,
+  logging: false // 쿼리 실행 시 콘솔창에 출력 안함
+});
 
 const User = require('./user')(sequelize, DataTypes);
 const Location = require('./location')(sequelize, DataTypes);

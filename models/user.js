@@ -1,19 +1,32 @@
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    const Review = sequelize.define('Review', {
-      user_id: { type: DataTypes.INTEGER, allowNull: false },
-      location_id: { type: DataTypes.INTEGER, allowNull: false },
-      rating: { type: DataTypes.INTEGER, allowNull: false },
-      comment: { type: DataTypes.TEXT, allowNull: true }
-    }, {
-      timestamps: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at'
-    });
-  
-    Review.associate = function(models) {
-      Review.belongsTo(models.User, { foreignKey: 'user_id' });
-      Review.belongsTo(models.Location, { foreignKey: 'location_id' });
-    };
-  
-    return Review;
-  };
+  class User extends Model {
+    static associate(models) {
+      // define association here
+    }
+  }
+  User.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+  return User;
+};
