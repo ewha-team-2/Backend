@@ -15,17 +15,25 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       type: DataTypes.INTEGER,
     },
-    user_id: {
-      type: DataTypes.STRING,
+    travel_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users',
-        key: 'id',
-      },
+        model: 'Travels',
+        key: 'id'
+      }
     },
-    title: {
+    place_id: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    date: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
+    },
+    time: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
     description: {
       type: DataTypes.TEXT,
@@ -33,18 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     budget: {
       type: DataTypes.FLOAT,
-      allowNull: true,
-    },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    start_time: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    end_time: {
-      type: DataTypes.DATE,
       allowNull: true,
     },
     created_at: {

@@ -14,6 +14,7 @@ const sequelize = new Sequelize(database, username, password, {
 });
 
 const User = require('./user')(sequelize, DataTypes);
+const Travel = require('./travel')(sequelize, DataTypes);
 const Plan = require('./plan')(sequelize, DataTypes);
 const Review = require('./review')(sequelize, DataTypes);
 
@@ -21,6 +22,7 @@ const db = {};
 
 db.sequelize = sequelize;
 db.User = User;
+db.Travel = Travel;
 db.Plan = Plan;
 db.Review = Review;
 
