@@ -55,7 +55,10 @@ exports.googleAuthCallback = async (req, res) => {
     // JWT 생성
     const jwtToken = generateToken(userInstance);
 
-    res.cookie('jwt', jwtToken, { httpOnly: true, secure: true });
+    res.cookie('jwt', jwtToken, { 
+      httpOnly: true, 
+      secure: false,
+    });
     res.redirect('/');
   } catch (error) {
     res.status(500).send(error);
