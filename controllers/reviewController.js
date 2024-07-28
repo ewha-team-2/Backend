@@ -25,9 +25,11 @@ exports.getReviews = async (req, res) => {
       order: orderBy
     });
 
-    res.json(reviews);
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const avgRating = reviews.length === 0? (0).toFixed(2) : (totalRating/reviews.length).toFixed(2);
+
+    res.json({ avgRating, reviews });
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ error: 'Failed to get reviews' });
   }
 };
