@@ -28,6 +28,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      place_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
