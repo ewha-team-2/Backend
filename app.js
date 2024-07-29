@@ -17,7 +17,6 @@ app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use('/reviews/', authenticateToken, reviewRoutes);
 app.use('/travels', authenticateToken, travelRoutes);
-app.use('/plans', authenticateToken, budgetRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello')

@@ -1,33 +1,26 @@
 const db = require('../models/index.js');
 const { Review } = db;
 
+const calculateAvgRating = (reviews) => {
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  return reviews.length ? (totalRating / reviews.length).toFixed(2) : '0.00';
+};
+
 exports.getReviews = async (req, res) => {
   const id = req.params.id;
   const order = req.query.order;
 
-  let orderBy;
-
-  switch (order) {
-    case 'rating_high':
-      orderBy = [['rating', 'DESC']];
-      break;
-    case 'rating_low':
-      orderBy = [['rating', 'ASC']];
-      break;
-    default:
-      orderBy = [['created_at', 'DESC']];
-      break;
-  }
+  const orderBy = {
+    rating_high: [['rating', 'DESC']],
+    rating_low: [['rating', 'ASC']],
+  }[order] || [['created_at', 'DESC']];
   
   try {
     const reviews = await Review.findAll({
       where: { place_id: id },
       order: orderBy
     });
-
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    const avgRating = reviews.length === 0? (0).toFixed(2) : (totalRating/reviews.length).toFixed(2);
-
+    const avgRating = parseFloat(calculateAvgRating(reviews));
     res.json({ avgRating, reviews });
   } catch (error) {
     res.status(500).json({ error: 'Failed to get reviews' });
@@ -79,12 +72,8 @@ exports.updateReview = async (req, res) => {
       return res.status(403).json({ error: 'Unauthorized access' });
     }
 
-    if (rating !== undefined) {
-      review.rating = rating;
-    }
-    if (comment !== undefined) {
-      review.comment = comment;
-    }
+    review.rating = rating ?? review.rating;
+    review.comment = comment ?? review.comment;
 
     await review.save();
     res.json(review);
