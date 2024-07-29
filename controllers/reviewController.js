@@ -1,5 +1,5 @@
 const db = require('../models/index.js');
-const { Review } = db;
+const { Review, User } = db;
 
 const calculateAvgRating = (reviews) => {
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
@@ -18,11 +18,16 @@ exports.getReviews = async (req, res) => {
   try {
     const reviews = await Review.findAll({
       where: { place_id: id },
-      order: orderBy
+      order: orderBy,
+      include: [{
+        model: User,
+        attributes: ['name', 'userProfilePic']
+      }]
     });
     const avgRating = parseFloat(calculateAvgRating(reviews));
     res.json({ avgRating, reviews });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Failed to get reviews' });
   }
 };
