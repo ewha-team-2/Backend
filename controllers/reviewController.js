@@ -56,8 +56,22 @@ exports.createReview = async (req, res) => {
       place_id,
     });
 
-    res.json(review);
+    const user = await User.findOne({
+      where: { id: user_id },
+      attributes: ['name', 'userProfilePic']
+    });
+
+    const reviewWithUser = {
+      ...review.toJSON(), // 리뷰 객체를 JSON으로 변환하여 복사
+      User: {
+        name: user.name,
+        userProfilePic: user.userProfilePic
+      }
+    };
+
+    res.json(reviewWithUser);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Failed to create review' });
   }
 };
