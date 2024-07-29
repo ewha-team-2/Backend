@@ -4,8 +4,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Travel extends Model {
     static associate(models) {
-      Travel.belongsTo(models.User, { foreignKey: 'user_id' });
-      Travel.hasMany(models.Plan, { foreignKey: 'travel_id' });
+      Travel.belongsTo(models.User, { foreignKey: 'user_id', targetKey: 'id' });
+      Travel.hasMany(models.Plan, { foreignKey: 'travel_id', sourceKey: 'id' });
     }
   }
 
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
         model: 'Users',
@@ -36,21 +36,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-    }
   }, {
     sequelize,
     modelName: 'Travel',
     tableName: 'Travels',
-    timestamps: false
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
   });
 
   return Travel;

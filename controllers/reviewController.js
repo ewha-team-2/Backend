@@ -60,7 +60,7 @@ exports.createReview = async (req, res) => {
 exports.updateReview = async (req, res) => {
   const { rating, comment } = req.body;
   const user_id = req.user.id;
-  const { review_id } = req.params.id;
+  const { review_id } = req.params;
 
   try {
     const review = await Review.findByPk(review_id);

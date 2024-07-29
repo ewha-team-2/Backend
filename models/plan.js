@@ -4,7 +4,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Plan extends Model {
     static associate(models) {
-      Plan.belongsTo(models.User, { foreignKey: 'user_id', targetKey: 'id' });
+      Plan.belongsTo(models.Travel, { foreignKey: 'travel_id', targetKey: 'id' });
     }
   }
 
@@ -43,21 +43,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    },
   }, {
     sequelize,
     modelName: 'Plan',
     tableName: 'Plans',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
   });
 
   return Plan;

@@ -1,5 +1,3 @@
-//const { Travel } = require('../models');
-
 const db = require('../models/index.js');
 const { Travel } = db;
 
