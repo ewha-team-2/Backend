@@ -48,7 +48,8 @@ exports.googleAuthCallback = async (req, res) => {
       where: { id: user.sub },
       defaults: {
         email: user.email,
-        name: user.name
+        name: user.name,
+        userProfilePic: user.picture
       }
     });
 

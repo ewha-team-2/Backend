@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    userProfilePic: {
+      type: DataTypes.STRING,
+    }
   }, {
     sequelize,
     modelName: 'User',
