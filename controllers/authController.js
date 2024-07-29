@@ -59,7 +59,7 @@ exports.googleAuthCallback = async (req, res) => {
       httpOnly: true, 
       secure: false,
     });
-    res.redirect('/');
+    res.redirect('http://localhost:3000');
   } catch (error) {
     res.status(500).send(error);
   }
