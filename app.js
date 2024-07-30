@@ -32,6 +32,10 @@ app.get('/logout', (req, res) => {
   res.redirect('http://localhost:3000/login');
 });
 
+app.get('/check-auth', authenticateToken, (req, res) => {
+  res.status(200).json({ message: 'Authenticated' });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
