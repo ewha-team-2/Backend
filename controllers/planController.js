@@ -30,8 +30,16 @@ exports.createPlan = async (req, res) => {
 
 exports.getPlans = async (req, res) => {
   const { id: travelId } = req.params;
+  const { date } = req.query;
+
   try {
-    const plans = await Plan.findAll({ where: { travel_id: travelId } });
+    const plans = await Plan.findAll({
+      attributes: ['id', 'travel_id', 'place_id', 'date', 'time', 'description', 'budget', 'created_at', 'updated_at'],
+      where: {
+        travel_id: travelId,
+        date: date
+      }
+    });
     res.json(plans);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch plans' });
