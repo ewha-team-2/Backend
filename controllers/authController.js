@@ -41,8 +41,6 @@ exports.googleAuthCallback = async (req, res) => {
 
     const user = userInfoResponse.data;
 
-    console.log(user); // 디버깅 코드
-
     // 데이터베이스에서 사용자 검색 또는 생성
     const [userInstance, created] = await User.findOrCreate({
       where: { id: user.sub },
